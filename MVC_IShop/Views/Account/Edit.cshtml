@@ -1,0 +1,38 @@
+﻿@model MVC_IShop.Models.EditModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Редактировать данные профиля</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div style="display: inline-block">
+        @using (Html.BeginForm())
+        {
+            <div style="min-width:800px;">
+                @Html.ValidationSummary(true, "")
+                <div class="editor-field">
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+                <div class="form-group">
+                    <p>  @Html.EditorFor(model => model.AccountName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })</p>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Email:", new { @class = "col-form-label" })
+                    <p>  @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control"} })</p>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Year:", new { @class = "col-form-label" })
+                    <p>@Html.EditorFor(model => model.Year, new { @class = "form-control" })</p>
+                </div>
+                <div>
+                    <button class="btn btn-primary  btn-lg btn-group btn-align-center" type="submit">Сохранить</button>
+                </div>
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,9 @@
+﻿@model IEnumerable<string>
+
+<h2 class="menuTitle" style="margin-left: -48px;">Производители:</h2>
+<h3 class="menu-item">@Ajax.ActionLink("Все", "GetGoodsList", "Goods", new { id = 1, filter = "Все", filterdata = "" }, new AjaxOptions { UpdateTargetId = "goods_list" }, new { onclick = "normalise()" })</h3>
+@foreach (var i in Model)
+{
+    //<h3 class="menu-item">@Ajax.ActionLink(@i, "GetGoodsList", "Goods", new { id = 1, filter = "Manufacturer", filterdata = @i }, new AjaxOptions { UpdateTargetId = "goods_list" })</h3>
+    <h3 class="menu-item" name="@i"><a class="filtLink" onclick=@String.Format("filtersManf('{0}')", @i)>@i</a> </h3>
+}

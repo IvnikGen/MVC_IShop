@@ -1,0 +1,18 @@
+﻿<div class="form-group">
+    <select class="form-control" id="selPrice">
+        <option data-tokens="PriceDesc" value="1">От дорогих к дешевым</option>
+        <option data-tokens="PriceASC" value="2">От дешевыхк дорогим</option>
+    </select>
+</div>
+
+
+<script>
+    $('#selPrice').change(function (e) {
+        //console.log('Value is: ' + this.options[this.selectedIndex].value +
+        //    ' Text is: ' + this.options[this.selectedIndex].textContent);
+        var sotrby = this.options[this.selectedIndex].textContent;
+        $.post("/goods/GetGoodsList", { id: 1, filter: ctgr, filterdata: fltr, sort: sotrby }).done(function (data) {
+            $('#goods_list').html(data)
+        });
+    });
+</script>

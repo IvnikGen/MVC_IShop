@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "GoodDelete";
+}
+
+@using (Html.BeginForm())
+{
+    <h2>Вы уверены, что хотите удалить товар @Html.Raw(ViewBag.Name) из списка?</h2>
+    <div class="row">
+        <div class="col-xs-12 ">
+            <button class="btn btn-primary  btn-lg btn-group btn-align-center" type="submit">
+                Да
+            </button>
+        </div>
+    </div>
+}

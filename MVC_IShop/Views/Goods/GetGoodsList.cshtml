@@ -1,0 +1,32 @@
+﻿
+@foreach (var m in Model)
+{
+    <div class="cardGood">
+        <div class="cardGood-body">
+            <img src="/Images/@m.Photo" width="220" height="200" />
+            <h4 class="cardGood-title">@m.GoodName</h4>
+            <h4 class="cardGood-title">Производитель: @m.Manufacturer</h4>
+            <h4 class="cardGood-title">Цена: @m.Price</h4>
+            <h4 class="cardGood-title">
+                @Html.ActionLink("В корзину", "AddToCart", "Cart", new { id = @m.GoodId }, new { @class = "btn btn-success" })
+            </h4>  @*btn-img monBtn*@
+        </div>
+    </div>
+}
+<style>
+    .btn-img{
+        content:"";
+        width:16px;
+        height:16px;
+        display: inline-block;
+        margin-right: 5px;
+        vertical-align: text-top;
+        background-color: transparent;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+
+    .monBtn{
+        background-image: url("")
+    }
+</style>

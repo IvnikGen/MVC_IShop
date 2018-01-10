@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_Layout.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        UpdateTargetId = "goods_list",
+    };
+}
+<div id="filters">
+    
+</div>
+
+    <div id="goods_list">
+        @Html.Action("GetGoodsList")
+    </div>
+
+
+    <div class="pages">
+        @for (int i = 0; i < Math.Ceiling(ViewBag.Count / 6.0); i++)
+        {
+            @Ajax.ActionLink($"{@i + 1}", "GetGoodsList", new { id = i + 1 }, options, new { @class = "btn btn-outline-success" })
+        }
+    </div>
+
+<script>
+    var fltr = "";
+    var ctgr = "";
+    function normalise() {
+        $('.pages').css('display', 'block');
+        $('#filters').css('display', 'none');
+        $('#filters').empty();
+    }
+
+   function filters(obj)
+   {
+       $('.pages').css('display', 'none');
+       $('#filters').css('display', 'block');
+
+      
+       for (var i = 0; i < $('.filtrinfo').length; i++) {
+           fltr += $('.filtrinfo').eq(i).text();
+       }
+
+       if (fltr.indexOf(obj) < 0)
+       { 
+            $('#filters').append('<div class="filtrinfo">' + obj + '<span class="filtrclose" onclick="closeFltr(this)"> X </span></div>');
+       }
+       fltr += obj + " X";
+       $.post("/goods/GetGoodsList", { id: 1, filter: "Category", filterdata: fltr }).done(function (data) {
+           $('#goods_list').html(data)
+       });
+       ctgr = "Category";
+      // console.log(fltr + " " + ctgr);
+    }
+    function closeFltr(element) {
+        $(element).closest("div").remove();
+
+        fltr = "";
+        for (var i = 0; i < $('.filtrinfo').length; i++) {
+            fltr += $('.filtrinfo').eq(i).text();
+        }
+
+        if (fltr.length == 0) {
+            $.post("/goods/GetGoodsList", { id: 1, filter: "Все", filterdata: "" }).done(function (data) {
+                $('#goods_list').html(data)
+            });;
+            normalise();
+            ctgr = "Все";
+            fltr = "";
+        }
+        else {
+            $.post("/goods/GetGoodsList", { id: 1, filter: "Category", filterdata: fltr }).done(function (data) {
+                $('#goods_list').html(data)
+            });
+            ctgr = "Category";
+        }
+    }
+
+    function filtersManf(obj) {
+        $('.pages').css('display', 'none');
+        $('#filters').css('display', 'block');
+
+        var fltr = "";
+        for (var i = 0; i < $('.filtrinfo').length; i++) {
+            fltr += $('.filtrinfo').eq(i).text();
+        }
+
+        if (fltr.indexOf(obj) < 0) {
+            $('#filters').append('<div class="filtrinfo">' + obj + '<span class="filtrclose" onclick="closeFltrManf(this)"> X </span></div>');
+        }
+        fltr += obj + " X";
+        $.post("/goods/GetGoodsList", { id: 1, filter: "Manufacturer", filterdata: fltr }).done(function (data) {
+            $('#goods_list').html(data)
+        });
+        ctgr = "Manufacturer";
+      //  console.log(fltr + " " + ctgr);
+    }
+    function closeFltrManf(element) {
+        $(element).closest("div").remove();
+
+        fltr = "";
+        for (var i = 0; i < $('.filtrinfo').length; i++) {
+            fltr += $('.filtrinfo').eq(i).text();
+        }
+
+        if (fltr.length == 0) {
+            $.post("/goods/GetGoodsList", { id: 1, filter: "Все", filterdata: "" }).done(function (data) {
+                $('#goods_list').html(data)
+            });;
+            normalise();
+            ctgr = "Все";
+            fltr = "";
+        }
+        else {
+            $.post("/goods/GetGoodsList", { id: 1, filter: "Manufacturer", filterdata: fltr }).done(function (data) {
+                $('#goods_list').html(data)
+            });
+            ctgr = "Manufacturer";
+        }
+
+    }
+</script>

@@ -1,0 +1,39 @@
+﻿@model MVC_IShop.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Добавление пользователя</h2>
+
+<div style="display: inline-block">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div>
+            <div class="editor-field">@Html.ValidationMessageFor(Model => Model.Email)</div>
+            <hr />
+            @Html.ValidationSummary(false)
+            <div class="form-group">
+                @Html.Label("Email", new { @class = "col-form-label" })
+                <p>  @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })</p>
+            </div>
+            <div class="form-group">
+                @Html.Label("Year", new { @class = "col-form-label" })
+                <p>  @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })</p>
+            </div>
+            <div class="form-group">
+                @Html.Label("Password", new { @class = "col-form-label" })
+                <p>  @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })</p>
+            </div>
+            <div class="form-group">
+                @Html.Label("Password Confirm", new { @class = "col-form-label" })
+                <p>  @Html.EditorFor(model => model.PasswordConfirm, new { htmlAttributes = new { @class = "form-control" } })</p>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-outline-success" value="Сохранить">
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Все товары</h2>
+
+<table class="table-responsive table-bordered table-hover">
+    <tr>
+        <th class="col-md-2" style="background-color: black; color:ghostwhite">Good Name</th>
+        <th class="col-md-1" style="background-color: black; color:ghostwhite">Manufacturer</th>
+        <th class="col-md-1" style="background-color: black; color:ghostwhite">Category</th>
+        <th class="col-md-1" style="background-color: black; color:ghostwhite">Price</th>
+        <th class="col-md-1" style="background-color: black; color:ghostwhite">GoodCount</th>
+        <th class="col-md-1" style="background-color: black; color:ghostwhite">Photo</th>
+        <th class="col-md-1" style="background-color: black; color:ghostwhite; text-align:center" colspan="2">
+            @Html.ActionLink("Добавиить", "AddGood", "Admin", null, new { @class = "btn btn-success" })
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var i in Model)
+    {
+        <tr>
+            <th class="col-md-2">@i.GoodName</th>
+            <th class="col-md-2">@i.Manufacturer</th>
+            <th class="col-md-2">@i.Category</th>
+            <th class="col-md-2">@i.Price</th>
+            <th class="col-md-2">@i.GoodCount</th>
+            <th class="col-md-3">@i.Photo</th>
+            <th class="col-md-2" style="text-align:center">
+                @Ajax.ActionLink("Редактировать", "GoodEdit", "Admin", new { id = @i.GoodId }, new AjaxOptions { UpdateTargetId = "Editing" }, new { @class = "btn btn-warning", onclick = "hidePartialDel()" })
+            </th>
+            <th class="col-md-2" style="text-align:center">
+                @Ajax.ActionLink("Удалить", "GoodDelete", "Admin", new { id = @i.GoodId }, new AjaxOptions { UpdateTargetId = "RemoveIt" }, new { @class = "btn btn-danger", onclick = "hidePartialEdit()" })
+            </th>
+        </tr>
+    }
+</table>
+
+<script>
+    function hidePartialDel() {
+        $('.btn-danger').attr("disabled", "disabled");
+        $('.btn-warning').attr("disabled", "disabled");
+    }
+
+    function hidePartialEdit() {
+        $('.btn-danger').attr("disabled", "disabled");
+        $('.btn-warning').attr("disabled", "disabled");
+    }
+</script>

@@ -1,0 +1,101 @@
+﻿
+@{
+    Layout = null;
+    ViewBag.Title = "Index";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Cart</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo"><img src="~/Content/logo.png"></div>
+        <div class="label"><p>ISHOp</p></div>
+        @Html.ActionLink("Back to ISHOp", "Index", "Goods", new { area = "" }, new { @class = "navbar-brand back" })
+    </header>
+        <h2>Корзина</h2>
+
+        <table class="table-responsive table-bordered table-hover">
+            <tr>
+                <th class="col-md-2" style="background-color: black; color:ghostwhite">Record</th>
+            </tr>
+            @foreach (var i in Model)
+            {
+                <tr>
+                    <th class="col-md-2">@i.RecordId</th>
+                    <th class="col-md-2">@i.Good.GoodName</th>
+                    <th class="col-md-2">@i.Good.Manufacturer</th>
+                    <th class="col-md-2">@i.Good.Category</th>
+                    <th class="col-md-2">@i.Good.Price</th>
+                    <th class="col-md-2">@i.Good.GoodCount</th>
+                    <th class="col-md-3"><img src="~/Images/@i.Good.Photo" style="width:200px"/></th>
+                    <th class="col-md-2" style="text-align:center">
+                        @Ajax.ActionLink("Удалить", "GoodDeleteCart", "Cart", new { id = @i.RecordId }, new AjaxOptions { UpdateTargetId = "RemoveIt" }, new { @class = "btn btn-danger", onclick = "hidePartialEdit()" })
+                    </th>
+                    <th class="col-md-2" style="text-align:center">
+                        @Ajax.ActionLink("Оплатить", "GoodOrder", "Cart", new { id = @i.RecordId }, new AjaxOptions { UpdateTargetId = "RemoveIt" }, new { @class = "btn btn-success", onclick = "hidePartialEdit()" })
+                    </th>
+                </tr>
+            }
+        </table>
+        <div id="RemoveIt"></div>
+        <div id="OrderIt"></div>
+    <style>
+        header {
+            background: black;
+            color: ghostwhite;
+            padding: 10px;
+            border-radius: 2px;
+            color: ghostwhite;
+        }
+        .back {
+            display: inline-block;
+        }
+        .logo {
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            box-shadow: 0px 0px 40px white;
+            display: inline-block;
+            width: 230px;
+        }
+
+            .logo img {
+                width: 100%;
+                border-radius: 50%;
+            }
+
+        .label {
+            position: absolute;
+            display: inline-block;
+        }
+
+            .label p {
+                font-size: 35px;
+                text-shadow: 22px 30px 8px darkgreen, 0 0 1em white;
+                font-family: fantasy;
+            }
+    </style>
+    <script>
+        function hidePartialDel() {
+            $('.btn-danger').attr("disabled", "disabled");
+            $('.btn-warning').attr("disabled", "disabled");
+        }
+
+        function hidePartialEdit() {
+            $('.btn-danger').attr("disabled", "disabled");
+            $('.btn-warning').attr("disabled", "disabled");
+        }
+    </script>
+</body>
+</html>

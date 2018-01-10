@@ -1,0 +1,42 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Administrators";
+}
+<h2>Существующие пользоветели</h2>
+<table class="table-responsive table-bordered table-hover">
+    <tr>
+        <th class="col-md-1" style="background-color: black; color:ghostwhite">Email</th>
+        <th class="col-md-1" style="background-color: black; color:ghostwhite">Year</th>
+        <th class="col-md-3" style="background-color: black; color:ghostwhite">UserName</th>
+        <th class="col-md-1" style="background-color: black; color:ghostwhite; text-align:center" colspan="2">
+            @Html.ActionLink("Добавиить", "Register", "Account", null, new { @class = "btn btn-success" })
+        </th>
+    </tr>
+    @foreach (var i in Model)
+    {
+        <tr>
+            <th class="col-md-2">@i.Email</th>
+            <th class="col-md-2">@i.Year</th>
+            <th class="col-md-2">@i.UserName</th>
+            <th class="col-md-2" style="text-align:center">
+                @Ajax.ActionLink("Редактировать", "Edit", "Account", new { id = @i.Id }, new AjaxOptions { UpdateTargetId = "Editing" }, new { @class = "btn btn-warning", onclick = "hidePartialDel()" })
+            </th>
+            <th class="col-md-2" style="text-align:center">
+                @Ajax.ActionLink("Удалить", "Delete", "Account", new { id = @i.Id }, new AjaxOptions { UpdateTargetId = "RemoveIt" }, new { @class = "btn btn-danger", onclick = "hidePartialEdit()" })
+            </th>
+        </tr>
+    }
+</table>
+
+<script>
+    function hidePartialDel() {
+        $('.btn-danger').attr("disabled", "disabled");
+        $('.btn-warning').attr("disabled", "disabled");
+    }
+
+    function hidePartialEdit() {
+        $('.btn-danger').attr("disabled", "disabled");
+        $('.btn-warning').attr("disabled", "disabled");
+    }
+</script>
