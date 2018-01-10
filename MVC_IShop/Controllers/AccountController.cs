@@ -23,14 +23,14 @@ namespace MVC_IShop.Controllers
             }
         }
 
-       // [Authorize]
+        [Authorize]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-       // [Authorize]
+        [Authorize]
         public async Task<ActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
