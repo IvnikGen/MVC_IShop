@@ -180,6 +180,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\ISHOpAzure - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -208,11 +209,23 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\GoodsController.cs" />
     <Compile Include="Controllers\NavigationController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201801111001511_InitialCreate.cs" />
+    <Compile Include="Migrations\201801111001511_InitialCreate.Designer.cs">
+      <DependentUpon>201801111001511_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201801111044380_DataMigration.cs" />
+    <Compile Include="Migrations\201801111044380_DataMigration.Designer.cs">
+      <DependentUpon>201801111044380_DataMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AddGoodModel.cs" />
     <Compile Include="Models\ApplicationContext.cs" />
+    <Compile Include="Models\ApplicationRole.cs" />
+    <Compile Include="Models\ApplicationRoleManager.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\EditGoodModel.cs" />
@@ -251,6 +264,9 @@
     <Content Include="Views\Shared\OrderPartial.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\GoodDeleteCart.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -259,10 +275,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ShopDB\ShopDB.csproj">
-      <Project>{e374ae41-fbbd-40d8-8dff-97a47994af79}</Project>
-      <Name>ShopDB</Name>
-    </ProjectReference>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201801111001511_InitialCreate.resx">
+      <DependentUpon>201801111001511_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201801111044380_DataMigration.resx">
+      <DependentUpon>201801111044380_DataMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

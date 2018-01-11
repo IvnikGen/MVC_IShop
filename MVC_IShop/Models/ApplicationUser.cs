@@ -10,6 +10,8 @@ namespace MVC_IShop.Models
     {
         public int Year { get; set; }
 
+       // public string UserRole { get; set; }
+
         public ApplicationUser()
         {
         }

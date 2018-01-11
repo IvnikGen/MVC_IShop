@@ -12,6 +12,9 @@ namespace MVC_IShop.Models
         public int Year { get; set; }
 
         [Required]
+        public string UserRole { get; set; }
+
+        [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 

@@ -24,21 +24,30 @@ namespace MVC_IShop.Controllers
         }
 
         [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email, Year = model.Year };
+                ApplicationUser user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Year = model.Year,
+                };
+
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    ApplicationUser creUs = await UserManager.FindAsync(model.Email, model.Password);
+                    await this.UserManager.AddToRoleAsync(creUs.Id, model.UserRole);
                     return RedirectToAction("Administrators", "Admin");
                 }
                 else
@@ -102,7 +111,7 @@ namespace MVC_IShop.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(string id)
         {
             ViewBag.Login = UserManager.FindById(id).Email;
@@ -111,7 +120,7 @@ namespace MVC_IShop.Controllers
 
         [HttpPost]
         [ActionName("Delete")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
             ApplicationUser user = await UserManager.FindByIdAsync(id);
@@ -126,7 +135,7 @@ namespace MVC_IShop.Controllers
             return RedirectToAction("Index", "Goods");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(string id)
         {
             ApplicationUser user = await UserManager.FindByIdAsync(id);
@@ -139,7 +148,7 @@ namespace MVC_IShop.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(EditModel model)
         {
             ApplicationUser user = await UserManager.FindByIdAsync(model.ID);

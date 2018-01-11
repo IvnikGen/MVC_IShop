@@ -1,5 +1,5 @@
 ﻿using MVC_IShop.Models;
-using ShopDB;
+using MVC_IShop.NewDBISHop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace MVC_IShop.Controllers
 {
     public class CartController : Controller
     {
-        GoodContext db = new GoodContext();
+        ISHOpDB db = new ISHOpDB();
         // GET: Cart
         public ActionResult Index()
         {

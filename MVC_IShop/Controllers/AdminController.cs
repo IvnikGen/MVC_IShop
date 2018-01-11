@@ -1,5 +1,5 @@
 ﻿using MVC_IShop.Models;
-using ShopDB;
+using MVC_IShop.NewDBISHop;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,7 +13,7 @@ namespace MVC_IShop.Controllers
 {
     public class AdminController : Controller
     {
-        GoodContext db = new GoodContext();
+        ISHOpDB db = new ISHOpDB();
         ApplicationContext UsDB = new ApplicationContext();
 
         [Authorize]
@@ -46,7 +46,7 @@ namespace MVC_IShop.Controllers
                     Photo = model.Photo
                 };
 
-                using (var db = new GoodContext())
+                using (var db = new ISHOpDB())
                 {
                     db.Goods.Add(good);
                     try
