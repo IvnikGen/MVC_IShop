@@ -232,6 +232,7 @@
     <Compile Include="Models\EditModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\UserInTableModel.cs" />
     <Compile Include="NewDBISHop\Cart.cs" />
     <Compile Include="NewDBISHop\Good.cs" />
     <Compile Include="NewDBISHop\ISHOpDB.cs" />

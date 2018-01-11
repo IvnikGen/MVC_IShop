@@ -1,4 +1,6 @@
-﻿using MVC_IShop.Models;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using MVC_IShop.Models;
 using MVC_IShop.NewDBISHop;
 using System;
 using System.Collections.Generic;
@@ -16,14 +18,14 @@ namespace MVC_IShop.Controllers
         ISHOpDB db = new ISHOpDB();
         ApplicationContext UsDB = new ApplicationContext();
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             List<Good> goods = db.Goods.ToList();
             return View(goods.OrderBy(s=> s.GoodName));
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddGood()
         {
             AddGoodModel model = new AddGoodModel();
@@ -31,7 +33,7 @@ namespace MVC_IShop.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddGood(AddGoodModel model)
         {
             if (ModelState.IsValid)
@@ -61,7 +63,7 @@ namespace MVC_IShop.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult GoodDelete(int id)
         {
             ViewBag.Name = db.Goods.First(x => x.GoodId == id).GoodName;
@@ -70,7 +72,7 @@ namespace MVC_IShop.Controllers
 
         [HttpPost]
         [ActionName("GoodDelete")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> GoodDeleteConfirmed(int id)
         {
             try
@@ -88,7 +90,7 @@ namespace MVC_IShop.Controllers
             return RedirectToAction("Index", "Admin");
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> GoodEdit(int id)
         {
             Good good = await db.Goods.FindAsync(id);
@@ -110,7 +112,7 @@ namespace MVC_IShop.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> GoodEdit(EditGoodModel model)
         {
             Good good = await db.Goods.FindAsync(model.GoodId);
@@ -130,11 +132,33 @@ namespace MVC_IShop.Controllers
             return PartialView(model);
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public ActionResult Administrators()
         {
             List<ApplicationUser> users = UsDB.Users.ToList();
-            return View(users);
+            List<UserInTableModel> usersTabl = new List<UserInTableModel>();
+
+            IList<string> roles = new List<string> { "Роль не определена" };
+
+            ApplicationUserManager userManager = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+
+            foreach (var us in users)
+            {
+                ApplicationUser user = userManager.FindByEmail(us.Email);
+                if (user != null)
+                    roles = userManager.GetRoles(user.Id);
+                
+                usersTabl.Add(new UserInTableModel
+                {
+                    Id = us.Id,
+                    Email = us.Email,
+                    UserName = us.UserName,
+                    Year = us.Year,
+                    UserRole = roles.Count > 0 ? roles[roles.Count -1].ToString() : "Роль не определена"
+                });
+            }
+            return View(usersTabl);
         }
 
     }

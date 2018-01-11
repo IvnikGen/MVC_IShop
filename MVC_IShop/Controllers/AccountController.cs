@@ -23,7 +23,6 @@ namespace MVC_IShop.Controllers
             }
         }
 
-        [Authorize]
         [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
